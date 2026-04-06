@@ -11,7 +11,7 @@ void Environment::Define(std::string s, std::shared_ptr<Object> obj) {
 void Environment::Set(std::string s, std::shared_ptr<Object> obj) {
     std::shared_ptr<Environment> env = shared_from_this();
     while (env) {
-        if (env->env_.contains(s)) {
+        if (env->env_.find(s) != env->env_.end()) {
             env->env_[s] = obj;
             return;
         }
@@ -24,7 +24,7 @@ void Environment::Set(std::string s, std::shared_ptr<Object> obj) {
 std::shared_ptr<Object> Environment::Get(std::string s) {
     std::shared_ptr<Environment> env = shared_from_this();
     while (env) {
-        if (env->env_.contains(s)) {
+        if (env->env_.find(s) != env->env_.end()) {
             return env->env_[s];
         }
         env = env->parent_;
@@ -36,7 +36,7 @@ std::shared_ptr<Object> Environment::Get(std::string s) {
 bool Environment::Check(std::string s) {
     std::shared_ptr<Environment> env = shared_from_this();
     while (env->parent_) {
-        if (env->env_.contains(s)) {
+        if (env->env_.find(s) != env->env_.end()) {
             return true;
         }
         env = env->parent_;

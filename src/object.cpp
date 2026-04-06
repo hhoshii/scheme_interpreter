@@ -282,7 +282,7 @@ std::shared_ptr<Object> Cell::Eval() {
             return LambdaEval(As<Cell>(GetSecond()));
         }
 
-        if (GetFunction().contains(op) && !current_env->Check(op)) {
+        if (GetFunction().find(op) != GetFunction().end() && !current_env->Check(op)) {
             return GetFunction()[op]->Apply(GetSecond());
         }
     }
